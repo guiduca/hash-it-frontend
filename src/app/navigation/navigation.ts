@@ -3,7 +3,7 @@ import { FuseNavigation } from '@fuse/types';
 export const navigation: FuseNavigation[] = [
     {
         id       : 'dashboard',
-        title    : 'Dashboards',
+        title    : 'Dashboard',
         type     : 'item',
         icon     : 'dashboard',
         url      : '/dashboard'

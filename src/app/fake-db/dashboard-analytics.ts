@@ -33,8 +33,8 @@ export class AnalyticsDashboardDb
             labels   : ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
             colors   : [
                 {
-                    borderColor              : '#82C377',
-                    backgroundColor          : '#438438',
+                    borderColor              : '#d4780d',
+                    backgroundColor          : '#f4af5e',
                     pointBackgroundColor     : '#1e88e5',
                     pointHoverBackgroundColor: '#1e88e5',
                     pointBorderColor         : '#ffffff',

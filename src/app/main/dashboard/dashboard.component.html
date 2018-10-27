@@ -1,3 +1,226 @@
-<div>
-  Dashboard
+<div id="dashboard-hive" class="page-layout simple" fxLayout="column">
+
+  <div class="main-widget" [@animate]="{value:'*',params:{y:'100%'}}" fxLayout="column">
+
+        <div class="position-relative p-24 mat-orange-500-bg"
+                fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <span class="h2"></span>
+            </div>
+        </div>
+
+        <div class="position-relative h-320 pb-16 mat-orange-500-bg">
+            <canvas baseChart
+                    [datasets]="widgetsAnalytics.widget1.datasets[widget1SelectedYear]"
+                    [labels]="widgetsAnalytics.widget1.labels"
+                    [colors]="widgetsAnalytics.widget1.colors"
+                    [options]="widgetsAnalytics.widget1.options"
+                    [chartType]="widgetsAnalytics.widget1.chartType">
+            </canvas>
+        </div>
+
+  </div>
+  <!-- CENTER -->
+  <div class="center" fusePerfectScrollbar>
+
+      <!-- CONTENT -->
+      <div class="content">
+          <div class="widget-group grey-100-bg p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
+          [@animateStagger]="{value:'50'}">
+
+
+         <!-- WIDGET 1 -->
+         <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
+                      fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+
+             <!-- Front -->
+             <div class="fuse-widget-front mat-white-bg mat-elevation-z2">
+                 <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+                      fxLayoutAlign="space-between center">
+                     <div></div>
+                     <button mat-icon-button fuseWidgetToggle aria-label="more">
+                         <mat-icon>more_vert</mat-icon>
+                     </button>
+                 </div>
+
+                 <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                     <div class="light-blue-fg font-size-72 line-height-72">
+                         5
+                     </div>
+                     <div class="h3 secondary-text font-weight-500">Networks
+                     </div>
+                 </div>
+
+                 <div class="p-16 grey-50-bg border-top" fxLayout="row" fxLayoutAlign="start center">
+
+                 </div>
+             </div>
+             <!-- / Front -->
+
+             <!-- Back -->
+             <div class="fuse-widget-back p-16 pt-32 mat-white-bg mat-elevation-z2">
+                 <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                         aria-label="Flip widget">
+                     <mat-icon class="s-16">close</mat-icon>
+                 </button>
+
+                 <div>
+                     {{widgets.widget1.detail}}
+                 </div>
+             </div>
+             <!-- / Back -->
+
+         </fuse-widget>
+         <!-- / WIDGET 1 -->
+
+         <!-- WIDGET 2 -->
+         <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
+                      fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+
+             <!-- Front -->
+             <div class="fuse-widget-front mat-white-bg mat-elevation-z2">
+                 <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+                      fxLayoutAlign="space-between center">
+                     <div class="h3"></div>
+
+                     <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                             aria-label="more">
+                         <mat-icon>more_vert</mat-icon>
+                     </button>
+                 </div>
+
+                 <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                     <div class="red-fg font-size-72 line-height-72">
+                         23
+                     </div>
+                     <div class="h3 secondary-text font-weight-500">Smart Contracts
+                     </div>
+                 </div>
+
+                 <div class="p-16 grey-50-bg border-top" fxLayout="row" fxLayoutAlign="start center">
+
+                 </div>
+             </div>
+             <!-- / Front -->
+
+             <!-- Back -->
+             <div class="fuse-widget-back p-16 pt-32 mat-white-bg mat-elevation-z2">
+                 <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                         aria-label="Flip widget">
+                     <mat-icon class="s-16">close</mat-icon>
+                 </button>
+
+                 <div>
+                     {{widgets.widget2.detail}}
+                 </div>
+             </div>
+             <!-- / Back -->
+
+         </fuse-widget>
+         <!-- / WIDGET 2 -->
+
+         <!-- WIDGET 3 -->
+         <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
+                      fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+
+             <!-- Front -->
+             <div class="fuse-widget-front mat-white-bg mat-elevation-z2">
+                 <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+                      fxLayoutAlign="space-between center">
+                     <div class="h3"></div>
+
+                     <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                             aria-label="more">
+                         <mat-icon>more_vert</mat-icon>
+                     </button>
+                 </div>
+
+                 <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                     <div class="orange-fg font-size-72 line-height-72">
+                         13
+                     </div>
+                     <div class="h3 secondary-text font-weight-500">Users
+                     </div>
+                 </div>
+
+                 <div class="p-16 grey-50-bg border-top" fxLayout="row" fxLayoutAlign="start center">
+
+                 </div>
+             </div>
+             <!-- / Front -->
+
+             <!-- Back -->
+             <div class="fuse-widget-back p-16 pt-32 mat-white-bg mat-elevation-z2">
+                 <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                         aria-label="Flip widget">
+                     <mat-icon class="s-16">close</mat-icon>
+                 </button>
+
+                 <div>
+                     {{widgets.widget3.detail}}
+                 </div>
+             </div>
+             <!-- / Back -->
+
+         </fuse-widget>
+         <!-- / WIDGET 3 -->
+
+         <!-- WIDGET 4 -->
+         <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
+                      fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+
+             <!-- Front -->
+             <div class="fuse-widget-front mat-white-bg mat-elevation-z2">
+                 <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+                      fxLayoutAlign="space-between center">
+                     <div class="h3"></div>
+
+                     <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                             aria-label="more">
+                         <mat-icon>more_vert</mat-icon>
+                     </button>
+                 </div>
+
+                 <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                     <div class="blue-grey-fg font-size-72 line-height-72">
+                         42
+                     </div>
+                     <div class="h3 secondary-text font-weight-500">Nodes
+                     </div>
+                 </div>
+
+                 <div class="p-16 grey-50-bg border-top" fxLayout="row" fxLayoutAlign="start center">
+
+                 </div>
+             </div>
+             <!-- / Front -->
+
+             <!-- Back -->
+             <div class="fuse-widget-back p-16 pt-32 mat-white-bg mat-elevation-z2">
+                 <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                         aria-label="Flip widget">
+                     <mat-icon class="s-16">close</mat-icon>
+                 </button>
+
+                 <div>
+                     {{widgets.widget4.detail}}
+                 </div>
+             </div>
+             <!-- / Back -->
+
+         </fuse-widget>
+         <!-- / WIDGET 4 -->
+
+
+
+
+
+          </div>
+     <!-- / WIDGET GROUP -->
+      </div>
+      <!-- / CONTENT -->
+
+  </div>
+  <!-- / CENTER -->
+
 </div>
