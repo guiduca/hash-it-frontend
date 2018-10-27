@@ -16,18 +16,11 @@ useTipPodTemplate('Implementation_hashit5'){
              sh 'npm install'
              sh 'npm run build'
              sh 'ls -la'
+             sh 'docker build -t frontend_nginx .'
+             sh 'docker tag frontend_nginx docker.paloitcloud.com.sg:443/hash-it/frontend_nginx:latest'
+             sh 'docker push docker.paloitcloud.com.sg:443/hash-it/frontend_nginx:latest'
           }
         }
 
-
-
-        // Stage 3
-        //stage("Kubernetes") {
-        //  container('kubectl'){
-        //      withEnv(['K8_NAMESPACE=hash-it-dev']) {
-        //      sh './deploy_k8s.sh'
-        //    }
-        //  }
-        //}
 }
 
