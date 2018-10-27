@@ -1,0 +1,30 @@
+<div class='container'>
+  <h2>List of networks</h2>
+  <!-- <ul class='networks'>
+    <li *ngFor='let network of networks'>
+      <span class="badge">{{network.name}}</span> {{network.noOfNodes}}
+    </li>
+  </ul> -->
+  <div class='grid-container'>
+    <div class='grid-item-index'> </div>
+    <div class='grid-item'>Network Name</div>
+    <div class='grid-item'>Number of Nodes</div>
+    <div class='grid-item'>Number of Authorities</div>
+    <div class='grid-item'>Created By</div>
+    <div class='grid-item'>Created Time</div>
+    <div class='grid-item'>Del</div>
+  </div>
+  <div class='grid-container' *ngFor='let network of networks; index as i' >
+
+      <div class='grid-item-index'>{{i+1}}</div>
+      <div class='grid-item'>{{network.name}}</div>
+      <div class='grid-item'>{{network.noOfNodes}}</div>
+      <div class='grid-item'>{{network.noOfAuthorities}}</div>
+      <div class='grid-item'>{{network.createdBy}}</div>
+      <div class='grid-item'>{{network.createdTime}}</div>
+      <div class='grid-item'><button mat-raised-button class="delete-row" (click)="deleteRow()">Delete</button></div>
+
+  </div>
+
+  <button mat-raised-button class="add-row" (click)="addNewRow()">Add Row</button>
+</div>

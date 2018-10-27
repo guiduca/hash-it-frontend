@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.grid-container {
+  display: grid;
+
+  grid-template-columns: auto auto auto auto auto auto;
+  width: 80%;
+}
+
+.grid-row {
+  display: grid;
+}
+
+.grid-item {
+  padding: 5px;
+  border: 1px solid grey;
+  min-width: 200px;
+}
+
+.grid-item-index {
+  padding: 5px;
+  border: 1px solid grey;
+  min-width: 30px;
+  text-align: center;
+}
+
+.add-row {
+  width: 80%;
+  text-transform: none;
+  color: #FFFFFF;
+  font-size: 14px;
+  padding: 5px;
+  background-color: #43a047;
+  margin-bottom: 8px;
+}

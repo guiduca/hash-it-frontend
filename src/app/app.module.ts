@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { Error404Module } from './main/404/error-404.module';
 import { LoginModule } from './main/login/login.module';
+import { NetworkListComponent } from './main/network-list/network-list.component';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
@@ -42,13 +43,15 @@ export function provideConfig() {
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
+    { path: 'networks', component: NetworkListComponent },
     // { path: 'features', loadChildren: './main/features/features.module#FeaturesModule' },
     { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        NetworkListComponent
     ],
     imports     : [
         BrowserModule,
