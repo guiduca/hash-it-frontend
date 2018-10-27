@@ -10,6 +10,8 @@ useTipPodTemplate('Implementation_hashit4'){
 
         stage("Build NPM") {
            container('build-docker3'){
+             sh 'whereis npm'
+             sh 'ls -l /usr/bin/npm'
              sh 'ls -la'
              sh 'npm install'
              sh 'npm run build'
