@@ -1,6 +1,6 @@
 @Library('Hash-it-Pipeline-Library') _
 
-useTipPodTemplate('Implementation_hashit2'){
+useTipPodTemplate('Implementation_hashit3'){
 
 
         stage ('Checkout') {
