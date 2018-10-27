@@ -9,25 +9,14 @@ useTipPodTemplate('Implementation_hashit2'){
         }
 
         stage("Build NPM") {
-<<<<<<< HEAD
            container('build-docker3'){
              sh 'ls -la'
              sh 'npm install'
              sh 'npm run build'
              sh 'ls -la'
-=======
-           container('build-nodejs'){
-             npm install
-             npm run build
           }
         }
 
-        stage("Check test build0docker") {
-           container('build-docker2'){
-             sh 'ls -l'
->>>>>>> fbc85714ab33aa3dc20a9183cd8f02d4d22845eb
-          }
-        }
 
 
         // Stage 3
