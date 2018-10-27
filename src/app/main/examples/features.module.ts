@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 
-import { DashboardModule } from './dashboard/dashboard.module';
 import { ConsultantsModule } from './consultants/consultants.module';
 import { ProjectsModule } from './projects/projects.module';
 import { StaffingModule } from './staffing/staffing.module';
@@ -12,7 +11,6 @@ import { ScrumboardModule } from './scrumboard/scrumboard.module';
 
 @NgModule({
     imports: [
-        DashboardModule,
         ConsultantsModule,
         ProjectsModule,
         StaffingModule,

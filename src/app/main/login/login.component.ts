@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit
     signInWithGoogle(): void {
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
             (userData) => { //on success
-              this.router.navigate(['/features/dashboard']);
+              this.router.navigate(['/dashboard']);
             }
         );
     }
