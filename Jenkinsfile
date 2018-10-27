@@ -10,16 +10,16 @@ useTipPodTemplate('Implementation_hashit5'){
 
         stage("Build NPM") {
            container('build-docker4'){
-             sh 'whereis npm'
-             sh 'ls -l /usr/bin/npm'
-             sh 'ls -la'
-             sh 'npm install'
-             sh 'npm run build'
-             sh 'ls -la'
-             useDockerRegistry{ 
+             useDockerRegistry{
+               sh 'whereis npm'
+               sh 'ls -l /usr/bin/npm'
+               sh 'ls -la'
+               sh 'npm install'
+               sh 'npm run build'
+               sh 'ls -la'
                sh 'docker build -t frontendnginx .'
-               sh 'docker tag frontendnginx docker.paloitcloud.com.sg:443/hash-it/frontendnginx:latest'
-               sh 'docker push docker.paloitcloud.com.sg:443/hash-it/frontendnginx:latest'
+               sh 'docker tag frontendnginx docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
+               sh 'docker push docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
             }
           }
         }
