@@ -16,9 +16,7 @@ export class CanActivateViaAuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise((resolve, reject) => {
 
-
-
-        this.authService.authState.subscribe((user) => {
+      this.authService.authState.subscribe((user) => {
             // if user is logged-in and trying to open login page. Do not allow to open
             /*if (user && state.url.indexOf('login') > -1) {
                 this.router.navigate([ '/features/dashboard' ]);
@@ -37,9 +35,11 @@ export class CanActivateViaAuthGuard implements CanActivate {
 
             // Do not let user visit the route
             else {
+                // localStorage.removeItem('autho_token');
                 // this.router.navigate([ '/login' ]);
                 // resolve(false);
-                resolve(true);
+
+                // resolve(true);
             }
         });
     });

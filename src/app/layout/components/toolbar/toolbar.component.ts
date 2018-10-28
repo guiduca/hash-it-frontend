@@ -27,7 +27,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
-    userPhoto: String; 
+    userPhoto: String;
     userName: String;
 
     // Private
@@ -176,13 +176,14 @@ export class ToolbarComponent implements OnInit, OnDestroy
     }
 
     /**
-     * 
+     *
      * Logout and return to login screen
-     * 
+     *
      */
     logout(): void
     {
-        this.authService.signOut().then(() => { 
+        this.authService.signOut().then(() => {
+            localStorage.removeItem('autho_token');
             this.router.navigate(['/login']);
         });
     }

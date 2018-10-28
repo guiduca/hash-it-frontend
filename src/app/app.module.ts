@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -28,6 +28,8 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { FakeDbService } from 'app/fake-db/fake-db.service';
+
+import { JwtInterceptor } from './services/jwt.interceptor';
 
 let config = new AuthServiceConfig([
     {
@@ -90,7 +92,8 @@ const appRoutes: Routes = [
     ],
     providers: [
         [CanActivateViaAuthGuard],
-        { provide: AuthServiceConfig, useFactory: provideConfig}
+        { provide: AuthServiceConfig, useFactory: provideConfig},
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
     ],
     bootstrap   : [
         AppComponent

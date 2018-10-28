@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private _httpClient: HttpClient
     )
     {
         // Configure the layout
@@ -66,7 +68,16 @@ export class LoginComponent implements OnInit
     signInWithGoogle(): void {
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
             (userData) => { //on success
+              console.log(userData);
               this.router.navigate(['/dashboard']);
+              /*this._httpClient.post('/uaas', {...userData})
+                .subscribe((response: any) => {
+                  localStorage.removeItem('autho_token');
+                  if(response.header.get('Authorization')) {
+                    localStorage.setItem('autho_token', response.header.get('Authorization'));
+                  }
+                  this.router.navigate(['/dashboard']);
+              });*/
             }
         );
     }
