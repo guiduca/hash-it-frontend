@@ -1,5 +1,6 @@
 @Library('Hash-it-Pipeline-Library') _
 
+if(env.BRANCH_NAME == 'master'){
 useTipPodTemplate('Implementation_hashit5'){
 
 
@@ -26,4 +27,4 @@ useTipPodTemplate('Implementation_hashit5'){
         }
 
 }
-
+}
