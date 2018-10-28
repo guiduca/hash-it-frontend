@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { NetworksService } from './networks.service';
 import { NetworksNetworkFormDialogComponent } from './network-form/network-form.component';
@@ -20,8 +18,6 @@ import { NetworksNetworkFormDialogComponent } from './network-form/network-form.
 export class NetworksComponent implements OnInit, OnDestroy
 {
     dialogRef: any;
-    hasSelectedNetworks: boolean;
-    searchInput: FormControl;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -30,18 +26,13 @@ export class NetworksComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {NetworksService} _networksService
-     * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
         private _networksService: NetworksService,
-        private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog
     )
     {
-        // Set the defaults
-        this.searchInput = new FormControl('');
-
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -55,21 +46,7 @@ export class NetworksComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._networksService.onSelectedNetworksChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedNetworks => {
-                this.hasSelectedNetworks = selectedNetworks.length > 0;
-            });
 
-        this.searchInput.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                distinctUntilChanged()
-            )
-            .subscribe(searchText => {
-                this._networksService.onSearchTextChanged.next(searchText);
-            });
     }
 
     /**
@@ -107,15 +84,5 @@ export class NetworksComponent implements OnInit, OnDestroy
 
                 this._networksService.updateNetwork(response.getRawValue());
             });
-    }
-
-    /**
-     * Toggle the sidebar
-     *
-     * @param name
-     */
-    toggleSidebar(name): void
-    {
-        this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 }

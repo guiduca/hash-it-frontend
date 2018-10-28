@@ -7,11 +7,6 @@
         <!-- APP TITLE -->
         <div fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md
-                    (click)="toggleSidebar('networks-main-sidebar')">
-                <mat-icon>menu</mat-icon>
-            </button>
-
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon mr-16"
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">settings_ethernet
@@ -24,23 +19,8 @@
         </div>
         <!-- / APP TITLE -->
 
-        <!-- SEARCH -->
-        <div class="search-input-wrapper mt-16 ml-8 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
-            <label for="search" class="mr-8">
-                <mat-icon>search</mat-icon>
-            </label>
-            <mat-form-field mat-no-float class="m-0" floatLabel="never">
-                <input matInput [formControl]="searchInput" id="search" placeholder="Search">
-            </mat-form-field>
-        </div>
-        <!-- / SEARCH -->
-
     </div>
     <!-- / HEADER -->
-
-    <!-- SELECTED BAR -->
-    <selected-bar class="mat-accent-600-bg" *ngIf="hasSelectedNetworks" [@slideInTop]></selected-bar>
-    <!-- / SELECTED BAR -->
 
     <!-- CONTENT -->
     <div class="content">

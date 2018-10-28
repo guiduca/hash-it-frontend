@@ -69,7 +69,8 @@ export class LoginComponent implements OnInit
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
             (userData) => { //on success
               console.log(userData);
-              this._httpClient.post('http://172.16.1.121:8080/uaas/api/v1/authenticate', {
+              this.router.navigate(['/dashboard']);
+              /*this._httpClient.post('http://172.16.1.121:8080/uaas/api/v1/authenticate', {
                   'email': userData.email,
                   'userId': userData.name
                 }, { observe: 'response' })
@@ -80,7 +81,7 @@ export class LoginComponent implements OnInit
                     localStorage.setItem('autho_token', response.headers.get('Authorization'));
                   }
                   this.router.navigate(['/dashboard']);
-              });
+              });*/
             }
         );
     }
