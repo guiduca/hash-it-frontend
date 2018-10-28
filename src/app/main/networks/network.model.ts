@@ -4,16 +4,11 @@ export class Network
 {
     id: string;
     name: string;
-    lastName: string;
-    avatar: string;
-    nickname: string;
-    company: string;
-    jobTitle: string;
-    email: string;
-    phone: string;
+    no_nodes: string;
+    no_authorities: string;
     address: string;
-    birthday: string;
-    notes: string;
+    created_by: string;
+    created_date: string;
 
     /**
      * Constructor
@@ -25,16 +20,11 @@ export class Network
         {
             this.id = network.id || FuseUtils.generateGUID();
             this.name = network.name || '';
-            this.lastName = network.lastName || '';
-            this.avatar = network.avatar || 'assets/images/avatars/profile.jpg';
-            this.nickname = network.nickname || '';
-            this.company = network.company || '';
-            this.jobTitle = network.jobTitle || '';
-            this.email = network.email || '';
-            this.phone = network.phone || '';
+            this.no_nodes = network.no_nodes || '';
+            this.no_authorities = network.no_authorities || '';
             this.address = network.address || '';
-            this.birthday = network.birhday || '';
-            this.notes = network.notes || '';
+            this.created_by = network.created_by || '';
+            this.created_date = network.created_date || '';
         }
     }
 }

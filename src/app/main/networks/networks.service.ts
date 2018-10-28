@@ -12,12 +12,12 @@ export class NetworksService implements Resolve<any>
 {
     onNetworksChanged: BehaviorSubject<any>;
     onSelectedNetworksChanged: BehaviorSubject<any>;
-    onUserDataChanged: BehaviorSubject<any>;
+    onNetworkDataChanged: BehaviorSubject<any>;
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
     networks: Network[];
-    user: any;
+    network: any;
     selectedNetworks: string[] = [];
 
     searchText: string;
@@ -35,7 +35,7 @@ export class NetworksService implements Resolve<any>
         // Set the defaults
         this.onNetworksChanged = new BehaviorSubject([]);
         this.onSelectedNetworksChanged = new BehaviorSubject([]);
-        this.onUserDataChanged = new BehaviorSubject([]);
+        this.onNetworkDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
     }
@@ -57,7 +57,7 @@ export class NetworksService implements Resolve<any>
 
             Promise.all([
                 this.getNetworks(),
-                this.getUserData()
+                this.getNetworkData()
             ]).then(
                 ([files]) => {
 
@@ -95,14 +95,14 @@ export class NetworksService implements Resolve<any>
                         if ( this.filterBy === 'starred' )
                         {
                             this.networks = this.networks.filter(_network => {
-                                return this.user.starred.includes(_network.id);
+                                return this.network.starred.includes(_network.id);
                             });
                         }
 
                         if ( this.filterBy === 'frequent' )
                         {
                             this.networks = this.networks.filter(_network => {
-                                return this.user.frequentNetworks.includes(_network.id);
+                                return this.network.frequentNetworks.includes(_network.id);
                             });
                         }
 
@@ -123,18 +123,18 @@ export class NetworksService implements Resolve<any>
     }
 
     /**
-     * Get user data
+     * Get network data
      *
      * @returns {Promise<any>}
      */
-    getUserData(): Promise<any>
+    getNetworkData(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-                this._httpClient.get('api/networks-user/5725a6802d10e277a0f35724')
+                this._httpClient.get('api/networks-network/3')
                     .subscribe((response: any) => {
-                        this.user = response;
-                        this.onUserDataChanged.next(this.user);
-                        resolve(this.user);
+                        this.network = response;
+                        this.onNetworkDataChanged.next(this.network);
+                        resolve(this.network);
                     }, reject);
             }
         );
@@ -228,17 +228,17 @@ export class NetworksService implements Resolve<any>
     }
 
     /**
-     * Update user data
+     * Update network data
      *
-     * @param userData
+     * @param networkData
      * @returns {Promise<any>}
      */
-    updateUserData(userData): Promise<any>
+    updateNetworkData(networkData): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/networks-user/' + this.user.id, {...userData})
+            this._httpClient.post('api/networks-network/' + this.network.id, {...networkData})
                 .subscribe(response => {
-                    this.getUserData();
+                    this.getNetworkData();
                     this.getNetworks();
                     resolve(response);
                 });

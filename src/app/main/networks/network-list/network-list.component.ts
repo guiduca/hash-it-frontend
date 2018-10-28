@@ -24,7 +24,7 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     dialogContent: TemplateRef<any>;
 
     networks: any;
-    user: any;
+    network: any;
     dataSource: FilesDataSource | null;
     displayedColumns = ['name', 'no_nodes', 'no_authorities', 'created_by'];
     selectedNetworks: any[];
@@ -87,10 +87,10 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
                 this.selectedNetworks = selectedNetworks;
             });
 
-        this._networksService.onUserDataChanged
+        this._networksService.onNetworkDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
+            .subscribe(network => {
+                this.network = network;
             });
 
         this._networksService.onFilterChanged
