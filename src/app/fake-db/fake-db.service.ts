@@ -3,7 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { ProjectDashboardDb } from 'app/fake-db/dashboard-project';
 import { AnalyticsDashboardDb } from 'app/fake-db/dashboard-analytics';
 
-import { ContactsFakeDb } from 'app/fake-db/contacts';
+import { ContractsFakeDb } from 'app/fake-db/contracts';
 import { NetworksFakeDb } from 'app/fake-db/networks';
 
 import { ProfileFakeDb } from 'app/fake-db/profile';
@@ -24,8 +24,8 @@ export class FakeDbService implements InMemoryDbService
             'analytics-dashboard-widgets': AnalyticsDashboardDb.widgets,
 
             // Contacts
-            'contacts-contacts': ContactsFakeDb.contacts,
-            'contacts-user'    : ContactsFakeDb.user,
+            'contracts-contracts': ContractsFakeDb.contracts,
+            'contracts-contract' : ContractsFakeDb.contract,
 
             // Contacts
             'networks-networks': NetworksFakeDb.networks,

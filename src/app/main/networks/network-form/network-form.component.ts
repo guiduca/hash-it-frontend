@@ -36,7 +36,7 @@ export class NetworksNetworkFormDialogComponent
 
         if ( this.action === 'edit' )
         {
-            this.dialogTitle = 'Edit Network';
+            this.dialogTitle = 'View Network';
             this.network = _data.network;
         }
         else
@@ -62,16 +62,11 @@ export class NetworksNetworkFormDialogComponent
         return this._formBuilder.group({
             id      : [this.network.id],
             name    : [this.network.name],
-            lastName: [this.network.lastName],
-            avatar  : [this.network.avatar],
-            nickname: [this.network.nickname],
-            company : [this.network.company],
-            jobTitle: [this.network.jobTitle],
-            email   : [this.network.email],
-            phone   : [this.network.phone],
-            address : [this.network.address],
-            birthday: [this.network.birthday],
-            notes   : [this.network.notes]
+            no_nodes: [this.network.no_nodes],
+            no_authorities  : [this.network.no_authorities],
+            address: [this.network.address],
+            created_by : [this.network.created_by],
+            created_date: [this.network.created_date]
         });
     }
 }

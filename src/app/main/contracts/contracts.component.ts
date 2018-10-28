@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { ContractsService } from './contracts.service';
 import { ContractsContractFormDialogComponent } from './contract-form/contract-form.component';
@@ -20,8 +18,6 @@ import { ContractsContractFormDialogComponent } from './contract-form/contract-f
 export class ContractsComponent implements OnInit, OnDestroy
 {
     dialogRef: any;
-    hasSelectedContacts: boolean;
-    searchInput: FormControl;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -29,19 +25,14 @@ export class ContractsComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {ContractsService} _contractsService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContractsService,
-        private _fuseSidebarService: FuseSidebarService,
+        private _contractsService: ContractsService,
         private _matDialog: MatDialog
     )
     {
-        // Set the defaults
-        this.searchInput = new FormControl('');
-
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -55,21 +46,7 @@ export class ContractsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedContactsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                this.hasSelectedContacts = selectedContacts.length > 0;
-            });
 
-        this.searchInput.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                distinctUntilChanged()
-            )
-            .subscribe(searchText => {
-                this._contactsService.onSearchTextChanged.next(searchText);
-            });
     }
 
     /**
@@ -87,12 +64,12 @@ export class ContractsComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * New contact
+     * New contract
      */
-    newContact(): void
+    newContract(): void
     {
         this.dialogRef = this._matDialog.open(ContractsContractFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'contract-form-dialog',
             data      : {
                 action: 'new'
             }
@@ -105,17 +82,7 @@ export class ContractsComponent implements OnInit, OnDestroy
                     return;
                 }
 
-                this._contactsService.updateContact(response.getRawValue());
+                this._contractsService.updateContract(response.getRawValue());
             });
-    }
-
-    /**
-     * Toggle the sidebar
-     *
-     * @param name
-     */
-    toggleSidebar(name): void
-    {
-        this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 }

@@ -12,7 +12,7 @@ import { ContractsService } from '../contracts.service';
 import { ContractsContractFormDialogComponent } from '../contract-form/contract-form.component';
 
 @Component({
-    selector     : 'contacts-contact-list',
+    selector     : 'contracts-contract-list',
     templateUrl  : './contract-list.component.html',
     styleUrls    : ['./contract-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -23,11 +23,11 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
 
-    contacts: any;
-    user: any;
+    contracts: any;
+    contract: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'name', 'email', 'phone', 'jobTitle', 'company', 'buttons'];
-    selectedContacts: any[];
+    displayedColumns = ['id', 'name', 'no_nodes', 'no_authorities', 'created_by'];
+    selectedContracts: any[];
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -38,11 +38,11 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {ContractsService} _contractsService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContractsService,
+        private _contractsService: ContractsService,
         public _matDialog: MatDialog
     )
     {
@@ -59,22 +59,22 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._contactsService);
+        this.dataSource = new FilesDataSource(this._contractsService);
 
-        this._contactsService.onContactsChanged
+        this._contractsService.onContractsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
+            .subscribe(contracts => {
+                this.contracts = contracts;
 
                 this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
+                contracts.map(contract => {
+                    this.checkboxes[contract.id] = false;
                 });
             });
 
-        this._contactsService.onSelectedContactsChanged
+        this._contractsService.onSelectedContractsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
+            .subscribe(selectedContracts => {
                 for ( const id in this.checkboxes )
                 {
                     if ( !this.checkboxes.hasOwnProperty(id) )
@@ -82,21 +82,21 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
                         continue;
                     }
 
-                    this.checkboxes[id] = selectedContacts.includes(id);
+                    this.checkboxes[id] = selectedContracts.includes(id);
                 }
-                this.selectedContacts = selectedContacts;
+                this.selectedContracts = selectedContracts;
             });
 
-        this._contactsService.onUserDataChanged
+        this._contractsService.onContractDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
+            .subscribe(contract => {
+                this.contract = contract;
             });
 
-        this._contactsService.onFilterChanged
+        this._contractsService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._contactsService.deselectContacts();
+                this._contractsService.deselectContracts();
             });
     }
 
@@ -115,16 +115,16 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Edit contact
+     * Edit contract
      *
-     * @param contact
+     * @param contract
      */
-    editContact(contact): void
+    editContract(contract): void
     {
         this.dialogRef = this._matDialog.open(ContractsContractFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'contract-form-dialog',
             data      : {
-                contact: contact,
+                contract: contract,
                 action : 'edit'
             }
         });
@@ -144,7 +144,7 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.updateContact(formData.getRawValue());
+                        this._contractsService.updateContract(formData.getRawValue());
 
                         break;
                     /**
@@ -152,7 +152,7 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
                      */
                     case 'delete':
 
-                        this.deleteContact(contact);
+                        this.deleteContract(contract);
 
                         break;
                 }
@@ -160,9 +160,9 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Delete Contact
+     * Delete Contract
      */
-    deleteContact(contact): void
+    deleteContract(contract): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
@@ -173,7 +173,7 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact);
+                this._contractsService.deleteContract(contract);
             }
             this.confirmDialogRef = null;
         });
@@ -183,30 +183,11 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
     /**
      * On selected change
      *
-     * @param contactId
+     * @param contractId
      */
-    onSelectedChange(contactId): void
+    onSelectedChange(contractId): void
     {
-        this._contactsService.toggleSelectedContact(contactId);
-    }
-
-    /**
-     * Toggle star
-     *
-     * @param contactId
-     */
-    toggleStar(contactId): void
-    {
-        if ( this.user.starred.includes(contactId) )
-        {
-            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
-        }
-        else
-        {
-            this.user.starred.push(contactId);
-        }
-
-        this._contactsService.updateUserData(this.user);
+        this._contractsService.toggleSelectedContract(contractId);
     }
 }
 
@@ -215,10 +196,10 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {ContractsService} _contractsService
      */
     constructor(
-        private _contactsService: ContractsService
+        private _contractsService: ContractsService
     )
     {
         super();
@@ -230,7 +211,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._contactsService.onContactsChanged;
+        return this._contractsService.onContractsChanged;
     }
 
     /**

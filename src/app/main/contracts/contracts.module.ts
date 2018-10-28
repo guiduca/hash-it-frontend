@@ -8,8 +8,6 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { ContractsComponent } from './contracts.component';
 import { ContractsService } from './contracts.service';
 import { ContractsContractListComponent } from './contract-list/contract-list.component';
-import { ContractsSelectedBarComponent } from './selected-bar/selected-bar.component';
-import { ContractsMainSidebarComponent } from './sidebars/main/main.component';
 import { ContractsContractFormDialogComponent } from './contract-form/contract-form.component';
 
 import { CanActivateViaAuthGuard } from '../../services/auth-guard.service';
@@ -20,7 +18,7 @@ const routes: Routes = [
         component: ContractsComponent,
         canActivate: [ CanActivateViaAuthGuard ],
         resolve  : {
-            contacts: ContractsService
+            contracts: ContractsService
         }
     }
 ];
@@ -29,8 +27,6 @@ const routes: Routes = [
     declarations   : [
         ContractsComponent,
         ContractsContractListComponent,
-        ContractsSelectedBarComponent,
-        ContractsMainSidebarComponent,
         ContractsContractFormDialogComponent
     ],
     imports        : [

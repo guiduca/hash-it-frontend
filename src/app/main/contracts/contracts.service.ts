@@ -5,20 +5,20 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { FuseUtils } from '@fuse/utils';
 
-import { Contact } from './contract.model';
+import { Contract } from './contracts.model';
 
 @Injectable()
 export class ContractsService implements Resolve<any>
 {
-    onContactsChanged: BehaviorSubject<any>;
-    onSelectedContactsChanged: BehaviorSubject<any>;
-    onUserDataChanged: BehaviorSubject<any>;
+    onContractsChanged: BehaviorSubject<any>;
+    onSelectedContractsChanged: BehaviorSubject<any>;
+    onContractDataChanged: BehaviorSubject<any>;
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
-    contacts: Contact[];
-    user: any;
-    selectedContacts: string[] = [];
+    contracts: Contract[];
+    contract: any;
+    selectedContracts: string[] = [];
 
     searchText: string;
     filterBy: string;
@@ -33,9 +33,9 @@ export class ContractsService implements Resolve<any>
     )
     {
         // Set the defaults
-        this.onContactsChanged = new BehaviorSubject([]);
-        this.onSelectedContactsChanged = new BehaviorSubject([]);
-        this.onUserDataChanged = new BehaviorSubject([]);
+        this.onContractsChanged = new BehaviorSubject([]);
+        this.onSelectedContractsChanged = new BehaviorSubject([]);
+        this.onContractDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
     }
@@ -56,19 +56,19 @@ export class ContractsService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getContacts(),
-                this.getUserData()
+                this.getContracts(),
+                this.getContractData()
             ]).then(
                 ([files]) => {
 
                     this.onSearchTextChanged.subscribe(searchText => {
                         this.searchText = searchText;
-                        this.getContacts();
+                        this.getContracts();
                     });
 
                     this.onFilterChanged.subscribe(filter => {
                         this.filterBy = filter;
-                        this.getContacts();
+                        this.getContracts();
                     });
 
                     resolve();
@@ -80,84 +80,84 @@ export class ContractsService implements Resolve<any>
     }
 
     /**
-     * Get contacts
+     * Get contracts
      *
      * @returns {Promise<any>}
      */
-    getContacts(): Promise<any>
+    getContracts(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-                this._httpClient.get('api/contacts-contacts')
+                this._httpClient.get('api/contracts-contracts')
                     .subscribe((response: any) => {
 
-                        this.contacts = response;
+                        this.contracts = response;
 
                         if ( this.filterBy === 'starred' )
                         {
-                            this.contacts = this.contacts.filter(_contact => {
-                                return this.user.starred.includes(_contact.id);
+                            this.contracts = this.contracts.filter(_contract => {
+                                return this.contract.starred.includes(_contract.id);
                             });
                         }
 
                         if ( this.filterBy === 'frequent' )
                         {
-                            this.contacts = this.contacts.filter(_contact => {
-                                return this.user.frequentContacts.includes(_contact.id);
+                            this.contracts = this.contracts.filter(_contract => {
+                                return this.contract.frequentContracts.includes(_contract.id);
                             });
                         }
 
                         if ( this.searchText && this.searchText !== '' )
                         {
-                            this.contacts = FuseUtils.filterArrayByString(this.contacts, this.searchText);
+                            this.contracts = FuseUtils.filterArrayByString(this.contracts, this.searchText);
                         }
 
-                        this.contacts = this.contacts.map(contact => {
-                            return new Contact(contact);
+                        this.contracts = this.contracts.map(contract => {
+                            return new Contract(contract);
                         });
 
-                        this.onContactsChanged.next(this.contacts);
-                        resolve(this.contacts);
+                        this.onContractsChanged.next(this.contracts);
+                        resolve(this.contracts);
                     }, reject);
             }
         );
     }
 
     /**
-     * Get user data
+     * Get contract data
      *
      * @returns {Promise<any>}
      */
-    getUserData(): Promise<any>
+    getContractData(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-                this._httpClient.get('api/contacts-user/5725a6802d10e277a0f35724')
+                this._httpClient.get('api/contracts-contract/3')
                     .subscribe((response: any) => {
-                        this.user = response;
-                        this.onUserDataChanged.next(this.user);
-                        resolve(this.user);
+                        this.contract = response;
+                        this.onContractDataChanged.next(this.contract);
+                        resolve(this.contract);
                     }, reject);
             }
         );
     }
 
     /**
-     * Toggle selected contact by id
+     * Toggle selected contract by id
      *
      * @param id
      */
-    toggleSelectedContact(id): void
+    toggleSelectedContract(id): void
     {
-        // First, check if we already have that contact as selected...
-        if ( this.selectedContacts.length > 0 )
+        // First, check if we already have that contract as selected...
+        if ( this.selectedContracts.length > 0 )
         {
-            const index = this.selectedContacts.indexOf(id);
+            const index = this.selectedContracts.indexOf(id);
 
             if ( index !== -1 )
             {
-                this.selectedContacts.splice(index, 1);
+                this.selectedContracts.splice(index, 1);
 
                 // Trigger the next event
-                this.onSelectedContactsChanged.next(this.selectedContacts);
+                this.onSelectedContractsChanged.next(this.selectedContracts);
 
                 // Return
                 return;
@@ -165,10 +165,10 @@ export class ContractsService implements Resolve<any>
         }
 
         // If we don't have it, push as selected
-        this.selectedContacts.push(id);
+        this.selectedContracts.push(id);
 
         // Trigger the next event
-        this.onSelectedContactsChanged.next(this.selectedContacts);
+        this.onSelectedContractsChanged.next(this.selectedContracts);
     }
 
     /**
@@ -176,113 +176,113 @@ export class ContractsService implements Resolve<any>
      */
     toggleSelectAll(): void
     {
-        if ( this.selectedContacts.length > 0 )
+        if ( this.selectedContracts.length > 0 )
         {
-            this.deselectContacts();
+            this.deselectContracts();
         }
         else
         {
-            this.selectContacts();
+            this.selectContracts();
         }
     }
 
     /**
-     * Select contacts
+     * Select contracts
      *
      * @param filterParameter
      * @param filterValue
      */
-    selectContacts(filterParameter?, filterValue?): void
+    selectContracts(filterParameter?, filterValue?): void
     {
-        this.selectedContacts = [];
+        this.selectedContracts = [];
 
-        // If there is no filter, select all contacts
+        // If there is no filter, select all contracts
         if ( filterParameter === undefined || filterValue === undefined )
         {
-            this.selectedContacts = [];
-            this.contacts.map(contact => {
-                this.selectedContacts.push(contact.id);
+            this.selectedContracts = [];
+            this.contracts.map(contract => {
+                this.selectedContracts.push(contract.id);
             });
         }
 
         // Trigger the next event
-        this.onSelectedContactsChanged.next(this.selectedContacts);
+        this.onSelectedContractsChanged.next(this.selectedContracts);
     }
 
     /**
-     * Update contact
+     * Update contract
      *
-     * @param contact
+     * @param contract
      * @returns {Promise<any>}
      */
-    updateContact(contact): Promise<any>
+    updateContract(contract): Promise<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.post('api/contacts-contacts/' + contact.id, {...contact})
+            this._httpClient.post('api/contracts-contracts/' + contract.id, {...contract})
                 .subscribe(response => {
-                    this.getContacts();
+                    this.getContracts();
                     resolve(response);
                 });
         });
     }
 
     /**
-     * Update user data
+     * Update contract data
      *
-     * @param userData
+     * @param contractData
      * @returns {Promise<any>}
      */
-    updateUserData(userData): Promise<any>
+    updateContractData(contractData): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/contacts-user/' + this.user.id, {...userData})
+            this._httpClient.post('api/contracts-contract/' + this.contract.id, {...contractData})
                 .subscribe(response => {
-                    this.getUserData();
-                    this.getContacts();
+                    this.getContractData();
+                    this.getContracts();
                     resolve(response);
                 });
         });
     }
 
     /**
-     * Deselect contacts
+     * Deselect contracts
      */
-    deselectContacts(): void
+    deselectContracts(): void
     {
-        this.selectedContacts = [];
+        this.selectedContracts = [];
 
         // Trigger the next event
-        this.onSelectedContactsChanged.next(this.selectedContacts);
+        this.onSelectedContractsChanged.next(this.selectedContracts);
     }
 
     /**
-     * Delete contact
+     * Delete contract
      *
-     * @param contact
+     * @param contract
      */
-    deleteContact(contact): void
+    deleteContract(contract): void
     {
-        const contactIndex = this.contacts.indexOf(contact);
-        this.contacts.splice(contactIndex, 1);
-        this.onContactsChanged.next(this.contacts);
+        const contractIndex = this.contracts.indexOf(contract);
+        this.contracts.splice(contractIndex, 1);
+        this.onContractsChanged.next(this.contracts);
     }
 
     /**
-     * Delete selected contacts
+     * Delete selected contracts
      */
-    deleteSelectedContacts(): void
+    deleteSelectedContracts(): void
     {
-        for ( const contactId of this.selectedContacts )
+        for ( const contractId of this.selectedContracts )
         {
-            const contact = this.contacts.find(_contact => {
-                return _contact.id === contactId;
+            const contract = this.contracts.find(_contract => {
+                return _contract.id === contractId;
             });
-            const contactIndex = this.contacts.indexOf(contact);
-            this.contacts.splice(contactIndex, 1);
+            const contractIndex = this.contracts.indexOf(contract);
+            this.contracts.splice(contractIndex, 1);
         }
-        this.onContactsChanged.next(this.contacts);
-        this.deselectContacts();
+        this.onContractsChanged.next(this.contracts);
+        this.deselectContracts();
     }
 
 }

@@ -26,7 +26,7 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     networks: any;
     network: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['name', 'no_nodes', 'no_authorities', 'created_by'];
+    displayedColumns = ['id', 'name', 'no_nodes', 'no_authorities', 'created_by'];
     selectedNetworks: any[];
     checkboxes: {};
     dialogRef: any;

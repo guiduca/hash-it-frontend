@@ -2,10 +2,10 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { Contact } from '../contract.model';
+import { Contract } from '../contracts.model';
 
 @Component({
-    selector     : 'contacts-contact-form-dialog',
+    selector     : 'contracts-contract-form-dialog',
     templateUrl  : './contract-form.component.html',
     styleUrls    : ['./contract-form.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -14,8 +14,8 @@ import { Contact } from '../contract.model';
 export class ContractsContractFormDialogComponent
 {
     action: string;
-    contact: Contact;
-    contactForm: FormGroup;
+    contract: Contract;
+    contractForm: FormGroup;
     dialogTitle: string;
 
     /**
@@ -36,16 +36,16 @@ export class ContractsContractFormDialogComponent
 
         if ( this.action === 'edit' )
         {
-            this.dialogTitle = 'Edit Network';
-            this.contact = _data.contact;
+            this.dialogTitle = 'View Contract';
+            this.contract = _data.contract;
         }
         else
         {
-            this.dialogTitle = 'New Network';
-            this.contact = new Contact({});
+            this.dialogTitle = 'New Contract';
+            this.contract = new Contract({});
         }
 
-        this.contactForm = this.createContactForm();
+        this.contractForm = this.createContractForm();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -53,25 +53,20 @@ export class ContractsContractFormDialogComponent
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Create contact form
+     * Create contract form
      *
      * @returns {FormGroup}
      */
-    createContactForm(): FormGroup
+    createContractForm(): FormGroup
     {
         return this._formBuilder.group({
-            id      : [this.contact.id],
-            name    : [this.contact.name],
-            lastName: [this.contact.lastName],
-            avatar  : [this.contact.avatar],
-            nickname: [this.contact.nickname],
-            company : [this.contact.company],
-            jobTitle: [this.contact.jobTitle],
-            email   : [this.contact.email],
-            phone   : [this.contact.phone],
-            address : [this.contact.address],
-            birthday: [this.contact.birthday],
-            notes   : [this.contact.notes]
+            id      : [this.contract.id],
+            name    : [this.contract.name],
+            no_nodes: [this.contract.no_nodes],
+            no_authorities  : [this.contract.no_authorities],
+            address: [this.contract.address],
+            created_by : [this.contract.created_by],
+            created_date: [this.contract.created_date]
         });
     }
 }
