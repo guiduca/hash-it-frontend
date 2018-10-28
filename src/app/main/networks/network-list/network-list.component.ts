@@ -12,7 +12,7 @@ import { NetworksService } from '../networks.service';
 import { NetworksNetworkFormDialogComponent } from '../network-form/network-form.component';
 
 @Component({
-    selector     : 'contacts-contact-list',
+    selector     : 'networks-network-list',
     templateUrl  : './network-list.component.html',
     styleUrls    : ['./network-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -23,11 +23,11 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
 
-    contacts: any;
+    networks: any;
     user: any;
     dataSource: FilesDataSource | null;
     displayedColumns = ['checkbox', 'name', 'email', 'phone', 'jobTitle', 'company', 'buttons'];
-    selectedContacts: any[];
+    selectedNetworks: any[];
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -38,11 +38,11 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {NetworksService} _networksService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: NetworksService,
+        private _networksService: NetworksService,
         public _matDialog: MatDialog
     )
     {
@@ -59,22 +59,22 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._contactsService);
+        this.dataSource = new FilesDataSource(this._networksService);
 
-        this._contactsService.onContactsChanged
+        this._networksService.onNetworksChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
+            .subscribe(networks => {
+                this.networks = networks;
 
                 this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
+                networks.map(network => {
+                    this.checkboxes[network.id] = false;
                 });
             });
 
-        this._contactsService.onSelectedContactsChanged
+        this._networksService.onSelectedNetworksChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
+            .subscribe(selectedNetworks => {
                 for ( const id in this.checkboxes )
                 {
                     if ( !this.checkboxes.hasOwnProperty(id) )
@@ -82,21 +82,21 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
                         continue;
                     }
 
-                    this.checkboxes[id] = selectedContacts.includes(id);
+                    this.checkboxes[id] = selectedNetworks.includes(id);
                 }
-                this.selectedContacts = selectedContacts;
+                this.selectedNetworks = selectedNetworks;
             });
 
-        this._contactsService.onUserDataChanged
+        this._networksService.onUserDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(user => {
                 this.user = user;
             });
 
-        this._contactsService.onFilterChanged
+        this._networksService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._contactsService.deselectContacts();
+                this._networksService.deselectNetworks();
             });
     }
 
@@ -115,16 +115,16 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Edit contact
+     * Edit network
      *
-     * @param contact
+     * @param network
      */
-    editContact(contact): void
+    editNetwork(network): void
     {
         this.dialogRef = this._matDialog.open(NetworksNetworkFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'network-form-dialog',
             data      : {
-                contact: contact,
+                network: network,
                 action : 'edit'
             }
         });
@@ -144,7 +144,7 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.updateContact(formData.getRawValue());
+                        this._networksService.updateNetwork(formData.getRawValue());
 
                         break;
                     /**
@@ -152,7 +152,7 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
                      */
                     case 'delete':
 
-                        this.deleteContact(contact);
+                        this.deleteNetwork(network);
 
                         break;
                 }
@@ -160,9 +160,9 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Delete Contact
+     * Delete Network
      */
-    deleteContact(contact): void
+    deleteNetwork(network): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
@@ -173,7 +173,7 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact);
+                this._networksService.deleteNetwork(network);
             }
             this.confirmDialogRef = null;
         });
@@ -183,30 +183,30 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     /**
      * On selected change
      *
-     * @param contactId
+     * @param networkId
      */
-    onSelectedChange(contactId): void
+    onSelectedChange(networkId): void
     {
-        this._contactsService.toggleSelectedContact(contactId);
+        this._networksService.toggleSelectedNetwork(networkId);
     }
 
     /**
      * Toggle star
      *
-     * @param contactId
+     * @param networkId
      */
-    toggleStar(contactId): void
+    toggleStar(networkId): void
     {
-        if ( this.user.starred.includes(contactId) )
+        if ( this.user.starred.includes(networkId) )
         {
-            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
+            this.user.starred.splice(this.user.starred.indexOf(networkId), 1);
         }
         else
         {
-            this.user.starred.push(contactId);
+            this.user.starred.push(networkId);
         }
 
-        this._contactsService.updateUserData(this.user);
+        this._networksService.updateUserData(this.user);
     }
 }
 
@@ -215,10 +215,10 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {NetworksService} _networksService
      */
     constructor(
-        private _contactsService: NetworksService
+        private _networksService: NetworksService
     )
     {
         super();
@@ -230,7 +230,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._contactsService.onContactsChanged;
+        return this._networksService.onNetworksChanged;
     }
 
     /**

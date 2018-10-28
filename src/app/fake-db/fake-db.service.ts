@@ -4,6 +4,7 @@ import { ProjectDashboardDb } from 'app/fake-db/dashboard-project';
 import { AnalyticsDashboardDb } from 'app/fake-db/dashboard-analytics';
 
 import { ContactsFakeDb } from 'app/fake-db/contacts';
+import { NetworksFakeDb } from 'app/fake-db/networks';
 
 import { ProfileFakeDb } from 'app/fake-db/profile';
 import { SearchFakeDb } from 'app/fake-db/search';
@@ -25,6 +26,10 @@ export class FakeDbService implements InMemoryDbService
             // Contacts
             'contacts-contacts': ContactsFakeDb.contacts,
             'contacts-user'    : ContactsFakeDb.user,
+
+            // Contacts
+            'networks-networks': NetworksFakeDb.networks,
+            'networks-user'    : NetworksFakeDb.network,
 
 
             // Profile

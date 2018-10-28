@@ -20,7 +20,7 @@ import { NetworksNetworkFormDialogComponent } from './network-form/network-form.
 export class NetworksComponent implements OnInit, OnDestroy
 {
     dialogRef: any;
-    hasSelectedContacts: boolean;
+    hasSelectedNetworks: boolean;
     searchInput: FormControl;
 
     // Private
@@ -29,12 +29,12 @@ export class NetworksComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {NetworksService} _networksService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: NetworksService,
+        private _networksService: NetworksService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog
     )
@@ -55,10 +55,10 @@ export class NetworksComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedContactsChanged
+        this._networksService.onSelectedNetworksChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                this.hasSelectedContacts = selectedContacts.length > 0;
+            .subscribe(selectedNetworks => {
+                this.hasSelectedNetworks = selectedNetworks.length > 0;
             });
 
         this.searchInput.valueChanges
@@ -68,7 +68,7 @@ export class NetworksComponent implements OnInit, OnDestroy
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                this._contactsService.onSearchTextChanged.next(searchText);
+                this._networksService.onSearchTextChanged.next(searchText);
             });
     }
 
@@ -87,12 +87,12 @@ export class NetworksComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * New contact
+     * New network
      */
-    newContact(): void
+    newNetwork(): void
     {
         this.dialogRef = this._matDialog.open(NetworksNetworkFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'network-form-dialog',
             data      : {
                 action: 'new'
             }
@@ -105,7 +105,7 @@ export class NetworksComponent implements OnInit, OnDestroy
                     return;
                 }
 
-                this._contactsService.updateContact(response.getRawValue());
+                this._networksService.updateNetwork(response.getRawValue());
             });
     }
 

@@ -1,6 +1,6 @@
 import { FuseUtils } from '@fuse/utils';
 
-export class Contact
+export class Network
 {
     id: string;
     name: string;
@@ -18,23 +18,23 @@ export class Contact
     /**
      * Constructor
      *
-     * @param contact
+     * @param network
      */
-    constructor(contact)
+    constructor(network)
     {
         {
-            this.id = contact.id || FuseUtils.generateGUID();
-            this.name = contact.name || '';
-            this.lastName = contact.lastName || '';
-            this.avatar = contact.avatar || 'assets/images/avatars/profile.jpg';
-            this.nickname = contact.nickname || '';
-            this.company = contact.company || '';
-            this.jobTitle = contact.jobTitle || '';
-            this.email = contact.email || '';
-            this.phone = contact.phone || '';
-            this.address = contact.address || '';
-            this.birthday = contact.birhday || '';
-            this.notes = contact.notes || '';
+            this.id = network.id || FuseUtils.generateGUID();
+            this.name = network.name || '';
+            this.lastName = network.lastName || '';
+            this.avatar = network.avatar || 'assets/images/avatars/profile.jpg';
+            this.nickname = network.nickname || '';
+            this.company = network.company || '';
+            this.jobTitle = network.jobTitle || '';
+            this.email = network.email || '';
+            this.phone = network.phone || '';
+            this.address = network.address || '';
+            this.birthday = network.birhday || '';
+            this.notes = network.notes || '';
         }
     }
 }

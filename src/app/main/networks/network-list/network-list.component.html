@@ -3,8 +3,8 @@
     <!-- Checkbox Column -->
     <ng-container matColumnDef="checkbox">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let contact">
-            <mat-checkbox [(ngModel)]="checkboxes[contact.id]" (ngModelChange)="onSelectedChange(contact.id)"
+        <mat-cell *matCellDef="let network">
+            <mat-checkbox [(ngModel)]="checkboxes[network.id]" (ngModelChange)="onSelectedChange(network.id)"
                           (click)="$event.stopPropagation()">
             </mat-checkbox>
         </mat-cell>
@@ -13,7 +13,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let contact">
+        <mat-cell *matCellDef="let network">
             <p class="text-truncate font-weight-600">Network Name</p>
         </mat-cell>
     </ng-container>
@@ -21,7 +21,7 @@
     <!-- Email Column -->
     <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Nodes</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
+        <mat-cell *matCellDef="let network" fxHide fxShow.gt-sm>
             <p class="email text-truncate">
                 3
             </p>
@@ -31,7 +31,7 @@
     <!-- Phone Column -->
     <ng-container matColumnDef="phone">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Authorities</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+        <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
             <p class="phone text-truncate">
                 5
             </p>
@@ -41,9 +41,9 @@
     <!-- Job Title Column -->
     <ng-container matColumnDef="jobTitle">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Created By</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+        <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
             <p class="job-title text-truncate">
-              {{contact.name}}
+              {{network.name}}
             </p>
         </mat-cell>
     </ng-container>
@@ -51,7 +51,7 @@
     <!-- Company Column -->
     <ng-container matColumnDef="company">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Created Time</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+        <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
             <p class="company text-truncate">
                 5.00PM
             </p>
@@ -61,11 +61,11 @@
     <!-- Buttons Column -->
     <ng-container matColumnDef="buttons">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let contact">
+        <mat-cell *matCellDef="let network">
             <div fxFlex="row" fxLayoutAlign="end center">
-                <button mat-icon-button (click)="$event.stopPropagation();toggleStar(contact.id)" aria-label="Toggle star">
-                    <mat-icon class="amber-fg" *ngIf="user.starred.includes(contact.id)">star</mat-icon>
-                    <mat-icon class="secondary-text" *ngIf="!user.starred.includes(contact.id)">star_outline</mat-icon>
+                <button mat-icon-button (click)="$event.stopPropagation();toggleStar(network.id)" aria-label="Toggle star">
+                    <mat-icon class="amber-fg" *ngIf="user.starred.includes(network.id)">star</mat-icon>
+                    <mat-icon class="secondary-text" *ngIf="!user.starred.includes(network.id)">star_outline</mat-icon>
                 </button>
 
                 <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
@@ -74,7 +74,7 @@
                 </button>
 
                 <mat-menu #moreMenu="matMenu">
-                    <button mat-menu-item aria-label="remove" (click)="deleteContact(contact)">
+                    <button mat-menu-item aria-label="remove" (click)="deleteNetwork(network)">
                         <mat-icon>delete</mat-icon>
                         <span>Remove</span>
                     </button>
@@ -85,10 +85,10 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let contact; columns: displayedColumns;"
-             class="contact"
-             (click)="editContact(contact)"
-             [ngClass]="{'mat-accent-50-bg':checkboxes[contact.id]}"
+    <mat-row *matRowDef="let network; columns: displayedColumns;"
+             class="network"
+             (click)="editNetwork(network)"
+             [ngClass]="{'mat-accent-50-bg':checkboxes[network.id]}"
              matRipple
              [@animate]="{value:'*',params:{y:'100%'}}">
     </mat-row>

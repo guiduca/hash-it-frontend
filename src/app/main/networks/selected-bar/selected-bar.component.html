@@ -10,8 +10,8 @@
     <div fxFlex fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.gt-sm="space-between center">
 
         <div>
-            <span class="selected-contacts-count">
-                <span class="mr-4">{{selectedContacts.length}}</span>
+            <span class="selected-networks-count">
+                <span class="mr-4">{{selectedNetworks.length}}</span>
                 <span>selected</span>
             </span>
 
@@ -26,7 +26,7 @@
         </div>
 
         <div class="multi-select-actions">
-            <button mat-icon-button (click)="deleteSelectedContacts()" aria-label="delete selected">
+            <button mat-icon-button (click)="deleteSelectedNetworks()" aria-label="delete selected">
                 <mat-icon>delete</mat-icon>
             </button>
         </div>

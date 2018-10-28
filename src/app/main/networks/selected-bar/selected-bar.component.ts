@@ -15,9 +15,9 @@ import { NetworksService } from '../networks.service';
 export class NetworksSelectedBarComponent implements OnInit, OnDestroy
 {
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    hasSelectedContacts: boolean;
+    hasSelectedNetworks: boolean;
     isIndeterminate: boolean;
-    selectedContacts: string[];
+    selectedNetworks: string[];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -25,11 +25,11 @@ export class NetworksSelectedBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {NetworksService} _networksService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: NetworksService,
+        private _networksService: NetworksService,
         public _matDialog: MatDialog
     )
     {
@@ -46,13 +46,13 @@ export class NetworksSelectedBarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedContactsChanged
+        this._networksService.onSelectedNetworksChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                this.selectedContacts = selectedContacts;
+            .subscribe(selectedNetworks => {
+                this.selectedNetworks = selectedNetworks;
                 setTimeout(() => {
-                    this.hasSelectedContacts = selectedContacts.length > 0;
-                    this.isIndeterminate = (selectedContacts.length !== this._contactsService.contacts.length && selectedContacts.length > 0);
+                    this.hasSelectedNetworks = selectedNetworks.length > 0;
+                    this.isIndeterminate = (selectedNetworks.length !== this._networksService.networks.length && selectedNetworks.length > 0);
                 }, 0);
             });
     }
@@ -76,7 +76,7 @@ export class NetworksSelectedBarComponent implements OnInit, OnDestroy
      */
     selectAll(): void
     {
-        this._contactsService.selectContacts();
+        this._networksService.selectNetworks();
     }
 
     /**
@@ -84,25 +84,25 @@ export class NetworksSelectedBarComponent implements OnInit, OnDestroy
      */
     deselectAll(): void
     {
-        this._contactsService.deselectContacts();
+        this._networksService.deselectNetworks();
     }
 
     /**
-     * Delete selected contacts
+     * Delete selected networks
      */
-    deleteSelectedContacts(): void
+    deleteSelectedNetworks(): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete all selected contacts?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete all selected networks?';
 
         this.confirmDialogRef.afterClosed()
             .subscribe(result => {
                 if ( result )
                 {
-                    this._contactsService.deleteSelectedContacts();
+                    this._networksService.deleteSelectedNetworks();
                 }
                 this.confirmDialogRef = null;
             });

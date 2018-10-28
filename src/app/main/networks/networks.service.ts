@@ -5,20 +5,20 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { FuseUtils } from '@fuse/utils';
 
-import { Contact } from './network.model';
+import { Network } from './network.model';
 
 @Injectable()
 export class NetworksService implements Resolve<any>
 {
-    onContactsChanged: BehaviorSubject<any>;
-    onSelectedContactsChanged: BehaviorSubject<any>;
+    onNetworksChanged: BehaviorSubject<any>;
+    onSelectedNetworksChanged: BehaviorSubject<any>;
     onUserDataChanged: BehaviorSubject<any>;
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
-    contacts: Contact[];
+    networks: Network[];
     user: any;
-    selectedContacts: string[] = [];
+    selectedNetworks: string[] = [];
 
     searchText: string;
     filterBy: string;
@@ -33,8 +33,8 @@ export class NetworksService implements Resolve<any>
     )
     {
         // Set the defaults
-        this.onContactsChanged = new BehaviorSubject([]);
-        this.onSelectedContactsChanged = new BehaviorSubject([]);
+        this.onNetworksChanged = new BehaviorSubject([]);
+        this.onSelectedNetworksChanged = new BehaviorSubject([]);
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
@@ -56,19 +56,19 @@ export class NetworksService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getContacts(),
+                this.getNetworks(),
                 this.getUserData()
             ]).then(
                 ([files]) => {
 
                     this.onSearchTextChanged.subscribe(searchText => {
                         this.searchText = searchText;
-                        this.getContacts();
+                        this.getNetworks();
                     });
 
                     this.onFilterChanged.subscribe(filter => {
                         this.filterBy = filter;
-                        this.getContacts();
+                        this.getNetworks();
                     });
 
                     resolve();
@@ -80,43 +80,43 @@ export class NetworksService implements Resolve<any>
     }
 
     /**
-     * Get contacts
+     * Get networks
      *
      * @returns {Promise<any>}
      */
-    getContacts(): Promise<any>
+    getNetworks(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-                this._httpClient.get('api/contacts-contacts')
+                this._httpClient.get('api/networks-networks')
                     .subscribe((response: any) => {
 
-                        this.contacts = response;
+                        this.networks = response;
 
                         if ( this.filterBy === 'starred' )
                         {
-                            this.contacts = this.contacts.filter(_contact => {
-                                return this.user.starred.includes(_contact.id);
+                            this.networks = this.networks.filter(_network => {
+                                return this.user.starred.includes(_network.id);
                             });
                         }
 
                         if ( this.filterBy === 'frequent' )
                         {
-                            this.contacts = this.contacts.filter(_contact => {
-                                return this.user.frequentContacts.includes(_contact.id);
+                            this.networks = this.networks.filter(_network => {
+                                return this.user.frequentNetworks.includes(_network.id);
                             });
                         }
 
                         if ( this.searchText && this.searchText !== '' )
                         {
-                            this.contacts = FuseUtils.filterArrayByString(this.contacts, this.searchText);
+                            this.networks = FuseUtils.filterArrayByString(this.networks, this.searchText);
                         }
 
-                        this.contacts = this.contacts.map(contact => {
-                            return new Contact(contact);
+                        this.networks = this.networks.map(network => {
+                            return new Network(network);
                         });
 
-                        this.onContactsChanged.next(this.contacts);
-                        resolve(this.contacts);
+                        this.onNetworksChanged.next(this.networks);
+                        resolve(this.networks);
                     }, reject);
             }
         );
@@ -130,7 +130,7 @@ export class NetworksService implements Resolve<any>
     getUserData(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-                this._httpClient.get('api/contacts-user/5725a6802d10e277a0f35724')
+                this._httpClient.get('api/networks-user/5725a6802d10e277a0f35724')
                     .subscribe((response: any) => {
                         this.user = response;
                         this.onUserDataChanged.next(this.user);
@@ -141,23 +141,23 @@ export class NetworksService implements Resolve<any>
     }
 
     /**
-     * Toggle selected contact by id
+     * Toggle selected network by id
      *
      * @param id
      */
-    toggleSelectedContact(id): void
+    toggleSelectedNetwork(id): void
     {
-        // First, check if we already have that contact as selected...
-        if ( this.selectedContacts.length > 0 )
+        // First, check if we already have that network as selected...
+        if ( this.selectedNetworks.length > 0 )
         {
-            const index = this.selectedContacts.indexOf(id);
+            const index = this.selectedNetworks.indexOf(id);
 
             if ( index !== -1 )
             {
-                this.selectedContacts.splice(index, 1);
+                this.selectedNetworks.splice(index, 1);
 
                 // Trigger the next event
-                this.onSelectedContactsChanged.next(this.selectedContacts);
+                this.onSelectedNetworksChanged.next(this.selectedNetworks);
 
                 // Return
                 return;
@@ -165,10 +165,10 @@ export class NetworksService implements Resolve<any>
         }
 
         // If we don't have it, push as selected
-        this.selectedContacts.push(id);
+        this.selectedNetworks.push(id);
 
         // Trigger the next event
-        this.onSelectedContactsChanged.next(this.selectedContacts);
+        this.onSelectedNetworksChanged.next(this.selectedNetworks);
     }
 
     /**
@@ -176,52 +176,52 @@ export class NetworksService implements Resolve<any>
      */
     toggleSelectAll(): void
     {
-        if ( this.selectedContacts.length > 0 )
+        if ( this.selectedNetworks.length > 0 )
         {
-            this.deselectContacts();
+            this.deselectNetworks();
         }
         else
         {
-            this.selectContacts();
+            this.selectNetworks();
         }
     }
 
     /**
-     * Select contacts
+     * Select networks
      *
      * @param filterParameter
      * @param filterValue
      */
-    selectContacts(filterParameter?, filterValue?): void
+    selectNetworks(filterParameter?, filterValue?): void
     {
-        this.selectedContacts = [];
+        this.selectedNetworks = [];
 
-        // If there is no filter, select all contacts
+        // If there is no filter, select all networks
         if ( filterParameter === undefined || filterValue === undefined )
         {
-            this.selectedContacts = [];
-            this.contacts.map(contact => {
-                this.selectedContacts.push(contact.id);
+            this.selectedNetworks = [];
+            this.networks.map(network => {
+                this.selectedNetworks.push(network.id);
             });
         }
 
         // Trigger the next event
-        this.onSelectedContactsChanged.next(this.selectedContacts);
+        this.onSelectedNetworksChanged.next(this.selectedNetworks);
     }
 
     /**
-     * Update contact
+     * Update network
      *
-     * @param contact
+     * @param network
      * @returns {Promise<any>}
      */
-    updateContact(contact): Promise<any>
+    updateNetwork(network): Promise<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.post('api/contacts-contacts/' + contact.id, {...contact})
+            this._httpClient.post('api/networks-networks/' + network.id, {...network})
                 .subscribe(response => {
-                    this.getContacts();
+                    this.getNetworks();
                     resolve(response);
                 });
         });
@@ -236,53 +236,53 @@ export class NetworksService implements Resolve<any>
     updateUserData(userData): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/contacts-user/' + this.user.id, {...userData})
+            this._httpClient.post('api/networks-user/' + this.user.id, {...userData})
                 .subscribe(response => {
                     this.getUserData();
-                    this.getContacts();
+                    this.getNetworks();
                     resolve(response);
                 });
         });
     }
 
     /**
-     * Deselect contacts
+     * Deselect networks
      */
-    deselectContacts(): void
+    deselectNetworks(): void
     {
-        this.selectedContacts = [];
+        this.selectedNetworks = [];
 
         // Trigger the next event
-        this.onSelectedContactsChanged.next(this.selectedContacts);
+        this.onSelectedNetworksChanged.next(this.selectedNetworks);
     }
 
     /**
-     * Delete contact
+     * Delete network
      *
-     * @param contact
+     * @param network
      */
-    deleteContact(contact): void
+    deleteNetwork(network): void
     {
-        const contactIndex = this.contacts.indexOf(contact);
-        this.contacts.splice(contactIndex, 1);
-        this.onContactsChanged.next(this.contacts);
+        const networkIndex = this.networks.indexOf(network);
+        this.networks.splice(networkIndex, 1);
+        this.onNetworksChanged.next(this.networks);
     }
 
     /**
-     * Delete selected contacts
+     * Delete selected networks
      */
-    deleteSelectedContacts(): void
+    deleteSelectedNetworks(): void
     {
-        for ( const contactId of this.selectedContacts )
+        for ( const networkId of this.selectedNetworks )
         {
-            const contact = this.contacts.find(_contact => {
-                return _contact.id === contactId;
+            const network = this.networks.find(_network => {
+                return _network.id === networkId;
             });
-            const contactIndex = this.contacts.indexOf(contact);
-            this.contacts.splice(contactIndex, 1);
+            const networkIndex = this.networks.indexOf(network);
+            this.networks.splice(networkIndex, 1);
         }
-        this.onContactsChanged.next(this.contacts);
-        this.deselectContacts();
+        this.onNetworksChanged.next(this.networks);
+        this.deselectNetworks();
     }
 
 }

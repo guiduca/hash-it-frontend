@@ -2,10 +2,10 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { Contact } from '../network.model';
+import { Network } from '../network.model';
 
 @Component({
-    selector     : 'contacts-contact-form-dialog',
+    selector     : 'networks-network-form-dialog',
     templateUrl  : './network-form.component.html',
     styleUrls    : ['./network-form.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -14,8 +14,8 @@ import { Contact } from '../network.model';
 export class NetworksNetworkFormDialogComponent
 {
     action: string;
-    contact: Contact;
-    contactForm: FormGroup;
+    network: Network;
+    networkForm: FormGroup;
     dialogTitle: string;
 
     /**
@@ -37,15 +37,15 @@ export class NetworksNetworkFormDialogComponent
         if ( this.action === 'edit' )
         {
             this.dialogTitle = 'Edit Network';
-            this.contact = _data.contact;
+            this.network = _data.network;
         }
         else
         {
             this.dialogTitle = 'New Network';
-            this.contact = new Contact({});
+            this.network = new Network({});
         }
 
-        this.contactForm = this.createContactForm();
+        this.networkForm = this.createNetworkForm();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -53,25 +53,25 @@ export class NetworksNetworkFormDialogComponent
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Create contact form
+     * Create network form
      *
      * @returns {FormGroup}
      */
-    createContactForm(): FormGroup
+    createNetworkForm(): FormGroup
     {
         return this._formBuilder.group({
-            id      : [this.contact.id],
-            name    : [this.contact.name],
-            lastName: [this.contact.lastName],
-            avatar  : [this.contact.avatar],
-            nickname: [this.contact.nickname],
-            company : [this.contact.company],
-            jobTitle: [this.contact.jobTitle],
-            email   : [this.contact.email],
-            phone   : [this.contact.phone],
-            address : [this.contact.address],
-            birthday: [this.contact.birthday],
-            notes   : [this.contact.notes]
+            id      : [this.network.id],
+            name    : [this.network.name],
+            lastName: [this.network.lastName],
+            avatar  : [this.network.avatar],
+            nickname: [this.network.nickname],
+            company : [this.network.company],
+            jobTitle: [this.network.jobTitle],
+            email   : [this.network.email],
+            phone   : [this.network.phone],
+            address : [this.network.address],
+            birthday: [this.network.birthday],
+            notes   : [this.network.notes]
         });
     }
 }

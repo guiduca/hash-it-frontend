@@ -20,7 +20,7 @@ const routes: Routes = [
         component: NetworksComponent,
         canActivate: [ CanActivateViaAuthGuard ],
         resolve  : {
-            contacts: NetworksService
+            networks: NetworksService
         }
     }
 ];

@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NetworksService } from '../../networks.service';
 
 @Component({
-    selector   : 'contacts-main-sidebar',
+    selector   : 'networks-main-sidebar',
     templateUrl: './main.component.html',
     styleUrls  : ['./main.component.scss']
 })
@@ -20,10 +20,10 @@ export class NetworksMainSidebarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {NetworksService} _contactsService
+     * @param {NetworksService} _networksService
      */
     constructor(
-        private _contactsService: NetworksService
+        private _networksService: NetworksService
     )
     {
         // Set the private defaults
@@ -39,9 +39,9 @@ export class NetworksMainSidebarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.filterBy = this._contactsService.filterBy || 'all';
+        this.filterBy = this._networksService.filterBy || 'all';
 
-        this._contactsService.onUserDataChanged
+        this._networksService.onUserDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(user => {
                 this.user = user;
@@ -70,6 +70,6 @@ export class NetworksMainSidebarComponent implements OnInit, OnDestroy
     changeFilter(filter): void
     {
         this.filterBy = filter;
-        this._contactsService.onFilterChanged.next(this.filterBy);
+        this._networksService.onFilterChanged.next(this.filterBy);
     }
 }
