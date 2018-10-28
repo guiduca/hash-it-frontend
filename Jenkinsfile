@@ -19,8 +19,8 @@ useTipPodTemplate('Implementation_hashit5'){
                sh 'npm run build'
                sh 'ls -la'
                sh 'ls -la dist/'
-               sh 'docker build -t frontendnginx .'
-               sh 'docker tag frontendnginx docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
+               sh 'docker build -t docker.paloitcloud.com.sg/hash-it/frontendnginx:latest .'
+               #sh 'docker tag frontendnginx docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
                sh 'docker push docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
             }
           }
