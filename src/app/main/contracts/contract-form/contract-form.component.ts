@@ -62,11 +62,9 @@ export class ContractsContractFormDialogComponent
         return this._formBuilder.group({
             id      : [this.contract.id],
             name    : [this.contract.name],
-            no_nodes: [this.contract.no_nodes],
-            no_authorities  : [this.contract.no_authorities],
-            address: [this.contract.address],
+            network: [this.contract.network],
             created_by : [this.contract.created_by],
-            created_date: [this.contract.created_date]
+            contract_code: [this.contract.contract_code]
         });
     }
 }

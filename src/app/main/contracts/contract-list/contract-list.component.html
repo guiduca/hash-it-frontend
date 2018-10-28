@@ -17,20 +17,11 @@
         </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="no_nodes">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Nodes</mat-header-cell>
+    <ng-container matColumnDef="network">
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Network ID</mat-header-cell>
         <mat-cell *matCellDef="let contract" fxHide fxShow.gt-sm>
             <p class="text-truncate">
-              {{contract.no_nodes}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="no_authorities">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Authorities</mat-header-cell>
-        <mat-cell *matCellDef="let contract" fxHide fxShow.gt-md>
-            <p class="text-truncate">
-              {{contract.no_authorities}}
+              {{contract.network}}
             </p>
         </mat-cell>
     </ng-container>

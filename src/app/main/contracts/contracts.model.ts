@@ -4,11 +4,9 @@ export class Contract
 {
     id: string;
     name: string;
-    no_nodes: string;
-    no_authorities: string;
-    address: string;
+    network: string;
+    contract_code: string;
     created_by: string;
-    created_date: string;
 
     /**
      * Constructor
@@ -20,11 +18,10 @@ export class Contract
         {
             this.id = contract.id || FuseUtils.generateGUID();
             this.name = contract.name || '';
-            this.no_nodes = contract.no_nodes || '';
-            this.no_authorities = contract.no_authorities || '';
-            this.address = contract.address || '';
+            this.network = contract.network || '';
+            this.contract_code = contract.contract_code || '';
             this.created_by = contract.created_by || '';
-            this.created_date = contract.created_date || '';
+
         }
     }
 }

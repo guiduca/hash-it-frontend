@@ -26,7 +26,7 @@ export class ContractsContractListComponent implements OnInit, OnDestroy
     contracts: any;
     contract: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['id', 'name', 'no_nodes', 'no_authorities', 'created_by'];
+    displayedColumns = ['id', 'name', 'network', 'created_by'];
     selectedContracts: any[];
     checkboxes: {};
     dialogRef: any;
