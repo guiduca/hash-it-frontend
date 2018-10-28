@@ -9,7 +9,7 @@ useTipPodTemplate('Implementation_hashit5'){
                 checkout scm
         }
 
-        stage("Build NPM") {
+        stage("Build NPM and Docker Push") {
            container('build-docker4'){
              useDockerRegistry{
                sh 'whereis npm'
@@ -25,6 +25,15 @@ useTipPodTemplate('Implementation_hashit5'){
             }
           }
         }
+
+       stage("Kubernetes") {
+          container('kubectl'){
+              withEnv(['K8_NAMESPACE=hash-it-dev']) {
+              sh './deploy_k8s.sh'
+            }
+          }
+        }
+
 
 }
 }

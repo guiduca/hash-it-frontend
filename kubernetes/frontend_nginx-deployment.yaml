@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontendnginx
+  labels:
+    io.kompose.service: frontendnginx
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: frontendnginx
+    spec:
+      containers:
+      - env:
+        image: docker.paloitcloud.com.sg/hash-it/frontendnginx:latest
+        name: frontendnginx
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: regsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontendnginx
+  labels:
+    io.kompose.service: frontendnginx
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    targetPort: 80
+  selector:
+    io.kompose.service: frontendnginx
