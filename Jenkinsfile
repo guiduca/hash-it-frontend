@@ -20,7 +20,7 @@ useTipPodTemplate('Implementation_hashit5'){
                sh 'ls -la'
                sh 'ls -la dist/'
                sh 'docker build -t docker.paloitcloud.com.sg/hash-it/frontendnginx:latest .'
-               #sh 'docker tag frontendnginx docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
+               //sh 'docker tag frontendnginx docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
                sh 'docker push docker.paloitcloud.com.sg/hash-it/frontendnginx:latest'
             }
           }
