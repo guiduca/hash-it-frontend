@@ -1,13 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+
+import { FuseSharedModule } from '@fuse/shared.module';
+import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 
 import { NetworksComponent } from './networks.component';
 import { NetworksService } from './networks.service';
-
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseSidebarModule } from '@fuse/components';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { NetworksNetworkListComponent } from './network-list/network-list.component';
+import { NetworksSelectedBarComponent } from './selected-bar/selected-bar.component';
+import { NetworksMainSidebarComponent } from './sidebars/main/main.component';
+import { NetworksNetworkFormDialogComponent } from './network-form/network-form.component';
 
 import { CanActivateViaAuthGuard } from '../../services/auth-guard.service';
 
@@ -15,25 +18,46 @@ const routes: Routes = [
     {
         path     : 'networks',
         component: NetworksComponent,
-        canActivate: [ CanActivateViaAuthGuard ]
+        canActivate: [ CanActivateViaAuthGuard ],
+        resolve  : {
+            contacts: NetworksService
+        }
     }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
+    declarations   : [
+        NetworksComponent,
+        NetworksNetworkListComponent,
+        NetworksSelectedBarComponent,
+        NetworksMainSidebarComponent,
+        NetworksNetworkFormDialogComponent
+    ],
+    imports        : [
+        RouterModule.forChild(routes),
 
-    FuseSharedModule,
-    FuseSidebarModule,
-    FuseWidgetModule
-  ],
-  declarations: [
-    NetworksComponent
-  ],
-  providers   : [
-    NetworksService
-  ]
+        MatButtonModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatRippleModule,
+        MatTableModule,
+        MatToolbarModule,
+
+        FuseSharedModule,
+        FuseConfirmDialogModule,
+        FuseSidebarModule
+    ],
+    providers      : [
+      NetworksService
+    ],
+    entryComponents: [
+      NetworksNetworkFormDialogComponent
+    ]
 })
-
-export class NetworksModule { }
+export class NetworksModule
+{
+}
