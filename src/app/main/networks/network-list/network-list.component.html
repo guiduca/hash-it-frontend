@@ -1,88 +1,40 @@
 <mat-table #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="checkbox">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let network">
-            <mat-checkbox [(ngModel)]="checkboxes[network.id]" (ngModelChange)="onSelectedChange(network.id)"
-                          (click)="$event.stopPropagation()">
-            </mat-checkbox>
-        </mat-cell>
-    </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let network">
-            <p class="text-truncate font-weight-600">Network Name</p>
+            <p class="text-truncate font-weight-600">{{network.name}}</p>
         </mat-cell>
     </ng-container>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
+    <ng-container matColumnDef="no_nodes">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Nodes</mat-header-cell>
         <mat-cell *matCellDef="let network" fxHide fxShow.gt-sm>
-            <p class="email text-truncate">
-                3
+            <p class="text-truncate">
+              {{network.no_nodes}}
             </p>
         </mat-cell>
     </ng-container>
 
-    <!-- Phone Column -->
-    <ng-container matColumnDef="phone">
+    <ng-container matColumnDef="no_authorities">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Authorities</mat-header-cell>
         <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
-            <p class="phone text-truncate">
-                5
+            <p class="text-truncate">
+              {{network.no_authorities}}
             </p>
         </mat-cell>
     </ng-container>
 
-    <!-- Job Title Column -->
-    <ng-container matColumnDef="jobTitle">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Created By</mat-header-cell>
-        <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
-            <p class="job-title text-truncate">
-              {{network.name}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Company Column -->
-    <ng-container matColumnDef="company">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Created Time</mat-header-cell>
-        <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
-            <p class="company text-truncate">
-                5.00PM
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Buttons Column -->
-    <ng-container matColumnDef="buttons">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let network">
-            <div fxFlex="row" fxLayoutAlign="end center">
-                <button mat-icon-button (click)="$event.stopPropagation();toggleStar(network.id)" aria-label="Toggle star">
-                    <mat-icon class="amber-fg" *ngIf="user.starred.includes(network.id)">star</mat-icon>
-                    <mat-icon class="secondary-text" *ngIf="!user.starred.includes(network.id)">star_outline</mat-icon>
-                </button>
-
-                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
-                        (click)="$event.stopPropagation();">
-                    <mat-icon class="secondary-text">more_vert</mat-icon>
-                </button>
-
-                <mat-menu #moreMenu="matMenu">
-                    <button mat-menu-item aria-label="remove" (click)="deleteNetwork(network)">
-                        <mat-icon>delete</mat-icon>
-                        <span>Remove</span>
-                    </button>
-                </mat-menu>
-            </div>
-
-        </mat-cell>
-    </ng-container>
+    <ng-container matColumnDef="created_by">
+      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Created By</mat-header-cell>
+      <mat-cell *matCellDef="let network" fxHide fxShow.gt-md>
+          <p class="text-truncate">
+            {{network.created_by}}
+          </p>
+      </mat-cell>
+  </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let network; columns: displayedColumns;"

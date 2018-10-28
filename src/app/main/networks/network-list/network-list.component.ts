@@ -26,7 +26,7 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     networks: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'name', 'email', 'phone', 'jobTitle', 'company', 'buttons'];
+    displayedColumns = ['name', 'no_nodes', 'no_authorities', 'created_by'];
     selectedNetworks: any[];
     checkboxes: {};
     dialogRef: any;
@@ -188,25 +188,6 @@ export class NetworksNetworkListComponent implements OnInit, OnDestroy
     onSelectedChange(networkId): void
     {
         this._networksService.toggleSelectedNetwork(networkId);
-    }
-
-    /**
-     * Toggle star
-     *
-     * @param networkId
-     */
-    toggleStar(networkId): void
-    {
-        if ( this.user.starred.includes(networkId) )
-        {
-            this.user.starred.splice(this.user.starred.indexOf(networkId), 1);
-        }
-        else
-        {
-            this.user.starred.push(networkId);
-        }
-
-        this._networksService.updateUserData(this.user);
     }
 }
 
