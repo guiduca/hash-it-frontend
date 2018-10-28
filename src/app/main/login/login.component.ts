@@ -69,15 +69,18 @@ export class LoginComponent implements OnInit
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
             (userData) => { //on success
               console.log(userData);
-              this.router.navigate(['/dashboard']);
-              /*this._httpClient.post('/uaas', {...userData})
+              this._httpClient.post('http://172.16.1.121:8080/uaas/api/v1/authenticate', {
+                  'email': userData.email,
+                  'userId': userData.name
+                }, { observe: 'response' })
                 .subscribe((response: any) => {
                   localStorage.removeItem('autho_token');
-                  if(response.header.get('Authorization')) {
-                    localStorage.setItem('autho_token', response.header.get('Authorization'));
+                  console.log('token', response);
+                  if(response.headers.get('Authorization')) {
+                    localStorage.setItem('autho_token', response.headers.get('Authorization'));
                   }
                   this.router.navigate(['/dashboard']);
-              });*/
+              });
             }
         );
     }

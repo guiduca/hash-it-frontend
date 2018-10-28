@@ -9,7 +9,7 @@ export class JwtInterceptor implements HttpInterceptor {
         if (localStorage.getItem('autho_token')) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${localStorage.getItem('autho_token')}`
+                    Authorization: localStorage.getItem('autho_token')
                 }
             });
         }
