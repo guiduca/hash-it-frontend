@@ -29,7 +29,7 @@ export class FakeDbService implements InMemoryDbService
 
             // Contacts
             'networks-networks': NetworksFakeDb.networks,
-            'networks-user'    : NetworksFakeDb.network,
+            'networks-network'    : NetworksFakeDb.network,
 
 
             // Profile
