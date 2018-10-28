@@ -22,6 +22,7 @@ import { Error404Module } from './main/404/error-404.module';
 import { LoginModule } from './main/login/login.module';
 import { DashboardModule } from './main/dashboard/dashboard.module';
 import { NetworksModule } from './main/networks/networks.module';
+import { ContractsModule } from './main/contracts/contracts.module';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
@@ -84,7 +85,8 @@ const appRoutes: Routes = [
         Error404Module,
         LoginModule,
         DashboardModule,
-        NetworksModule
+        NetworksModule,
+        ContractsModule
     ],
     providers: [
         [CanActivateViaAuthGuard],

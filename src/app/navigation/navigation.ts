@@ -14,5 +14,12 @@ export const navigation: FuseNavigation[] = [
         type     : 'item',
         icon     : 'settings_ethernet',
         url      : '/networks'
+    },
+    {
+        id       : 'contracts',
+        title    : 'Contracts',
+        type     : 'item',
+        icon     : 'assignment',
+        url      : '/contracts'
     }
 ];
