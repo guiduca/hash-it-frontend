@@ -25,3 +25,43 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+## DevOps
+
+### Jenkins
+
+Jenkins: http://jenkins.jx.paloitcloud.com.sg
+
+Nexus: https://nexus.paloitcloud.com.sg/
+
+Use of Jenkins Pipeline Library:
+
+The Jenkins Pipeline is triggered only with a push to the Master Branch.
+The
+
+Two steps are created to deploy the application into Kubernetes:
+  - Build Docker image
+    - Use docker_build image, install the modules and build the application
+        - Create a nginx image with the files
+        - Push this image to Nexus
+  - Deploy into Kubernetes
+    - Recreate deployment for frontend image
+
+
+### Kubernetes
+
+Rancher: https://11.0.0.40/g/clusters
+
+Containers are hosted inside Palo-IT kubernetes cluster.
+
+Components created:
+  - Deployment: To create POD
+  - Service: To be able to communication with other PODS
+  - Ingress: https://hashit.paloitcloud.com.sg -> Service
+
+### Improvements to do:
+
+  - Caching of image with NPM install, ... to reduce the time of the execution
+  - Use Tagging of the docker image and perform a rollout of the deployment instead of recreating the deployment.
+
