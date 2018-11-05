@@ -1,7 +1,7 @@
 @Library('Hash-it-Pipeline-Library') _
 
 if(env.BRANCH_NAME == 'master'){
-useTipPodTemplate('Implementation_hashit5'){
+useTipPodTemplate('Implementation_hashit'){
 
 
         stage ('Checkout') {
@@ -11,7 +11,7 @@ useTipPodTemplate('Implementation_hashit5'){
 
 
         stage("Build NPM and Docker Push") {
-           container('build-docker4'){
+           container('build-docker'){
              useDockerRegistry{
                sh 'whereis npm'
                sh 'ls -l /usr/bin/npm'
