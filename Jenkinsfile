@@ -9,6 +9,7 @@ useTipPodTemplate('Implementation_hashit5'){
                 checkout scm
         }
 
+
         stage("Build NPM and Docker Push") {
            container('build-docker4'){
              useDockerRegistry{
@@ -25,6 +26,7 @@ useTipPodTemplate('Implementation_hashit5'){
             }
           }
         }
+
 
        stage("Kubernetes") {
           container('kubectl'){
