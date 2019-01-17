@@ -11,7 +11,6 @@
     <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
 
         <form [formGroup]="networkForm">
-
             <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field fxFlex>
                     <input name="name" formControlName="name" placeholder="Name" matInput required>
@@ -35,13 +34,8 @@
     </div>
 
     <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
-
-        <button *ngIf="action !=='edit'"
-                mat-raised-button
-                (click)="matDialogRef.close(networkForm)"
-                class="save-button mat-accent"
-                [disabled]="networkForm.invalid"
-                aria-label="SAVE">
+        <button *ngIf="action !=='edit'" mat-raised-button (click)="matDialogRef.close(networkForm)" class="save-button mat-accent"
+            [disabled]="networkForm.invalid" aria-label="SAVE">
             SAVE
         </button>
 

@@ -5,14 +5,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Network } from '../network.model';
 
 @Component({
-    selector     : 'networks-network-form-dialog',
-    templateUrl  : './network-form.component.html',
-    styleUrls    : ['./network-form.component.scss'],
+    selector: 'networks-network-form-dialog',
+    templateUrl: './network-form.component.html',
+    styleUrls: ['./network-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class NetworksNetworkFormDialogComponent
-{
+export class NetworksNetworkFormDialogComponent {
     action: string;
     network: Network;
     networkForm: FormGroup;
@@ -29,18 +28,15 @@ export class NetworksNetworkFormDialogComponent
         public matDialogRef: MatDialogRef<NetworksNetworkFormDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private _data: any,
         private _formBuilder: FormBuilder
-    )
-    {
+    ) {
         // Set the defaults
         this.action = _data.action;
 
-        if ( this.action === 'edit' )
-        {
+        if (this.action === 'edit') {
             this.dialogTitle = 'View Network';
             this.network = _data.network;
         }
-        else
-        {
+        else {
             this.dialogTitle = 'New Network';
             this.network = new Network({});
         }
@@ -57,15 +53,14 @@ export class NetworksNetworkFormDialogComponent
      *
      * @returns {FormGroup}
      */
-    createNetworkForm(): FormGroup
-    {
+    createNetworkForm(): FormGroup {
         return this._formBuilder.group({
-            id      : [this.network.id],
-            name    : [this.network.name],
+            id: [this.network.id],
+            name: [this.network.name],
             no_nodes: [this.network.no_nodes],
-            no_authorities  : [this.network.no_authorities],
+            no_authorities: [this.network.no_authorities],
             address: [this.network.address],
-            created_by : [this.network.created_by],
+            created_by: [this.network.created_by],
             created_date: [this.network.created_date]
         });
     }

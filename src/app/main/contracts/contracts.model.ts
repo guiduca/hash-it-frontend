@@ -1,20 +1,25 @@
 import { FuseUtils } from '@fuse/utils';
 
-export class Contract
-{
+export class Contract {
     id: string;
     name: string;
     network: string;
     contract_code: string;
+    token_type: string;
     created_by: string;
+    contract_type: string;
+    token_name: string;
+    symbol: string;
+    max_supply: number;
+    max_decimal: number;
+
 
     /**
      * Constructor
      *
      * @param contract
      */
-    constructor(contract)
-    {
+    constructor(contract) {
         {
             this.id = contract.id || FuseUtils.generateGUID();
             this.name = contract.name || '';

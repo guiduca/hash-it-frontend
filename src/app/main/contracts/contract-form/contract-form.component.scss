@@ -7,7 +7,7 @@
     }
 
     @include media-breakpoint-up('xs') {
-        width: 400px;
+        min-width: 500px;
     }
 
     .mat-dialog-container {
@@ -20,6 +20,45 @@
 
         .toolbar-bottom {
             height: auto;
+        }
+        .contract-form {
+            display: flex;
+            justify-content: space-between;
+        }
+        .next-page {
+            padding: 0 5px;
+            min-width: 5px;
+        }
+        .template-form{
+            width: 1000px;
+        }
+        .primal-info{
+            border: 1px solid gray;
+            justify-content: space-around;
+        }
+        .detail-info{
+            border: 1px solid gray;
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            margin-left: 5%;
+        }
+        .left-column{
+            width: 70%;
+        }
+        .right-column{
+            border-left:1px solid gray;
+            width: 30%;
+            background-color: palegoldenrod;
+        }
+        .grey-bar{
+            background-color: gray;
+            padding: 4px;
+        }
+        .complete-info{
+            border: 1px solid gray;
+            width: 95%;
+            margin: 5px;
         }
     }
 

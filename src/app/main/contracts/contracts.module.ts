@@ -11,6 +11,7 @@ import { ContractsContractListComponent } from './contract-list/contract-list.co
 import { ContractsContractFormDialogComponent } from './contract-form/contract-form.component';
 
 import { CanActivateViaAuthGuard } from '../../services/auth-guard.service';
+import { ContractDetailsComponent } from './contract-details/contract-details.component';
 
 const routes: Routes = [
     {
@@ -27,7 +28,8 @@ const routes: Routes = [
     declarations   : [
         ContractsComponent,
         ContractsContractListComponent,
-        ContractsContractFormDialogComponent
+        ContractsContractFormDialogComponent,
+        ContractDetailsComponent
     ],
     imports        : [
         RouterModule.forChild(routes),

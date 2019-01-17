@@ -10,35 +10,75 @@
 
     <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
 
-        <form [formGroup]="contractForm">
+        <div [formGroup]="contractForm" class="contract-form">
+            <div *ngIf="formState == 0" style="width:80%">
+                <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex>
+                        <input name="name" formControlName="name" placeholder="Name" matInput required>
+                    </mat-form-field>
+                </div>
 
-            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field fxFlex>
-                    <input name="name" formControlName="name" placeholder="Name" matInput required>
-                </mat-form-field>
+                <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex>
+                        <input name="network" formControlName="network" placeholder="Network ID" matInput>
+                    </mat-form-field>
+                </div>
             </div>
-
-            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field fxFlex>
-                    <input name="network" formControlName="network" placeholder="Network ID" matInput>
-                </mat-form-field>
-            </div>
-
-
-        </form>
-
-    </div>
-
-    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
-
-        <button *ngIf="action !=='edit'"
-                mat-raised-button
-                (click)="matDialogRef.close(contractForm)"
-                class="save-button mat-accent"
-                [disabled]="contractForm.invalid"
-                aria-label="SAVE">
-            SAVE
+            <button *ngIf="formState == 0" mat-raised-button (click)='nextState()' class="next-page" aria-label="SAVE">
+                >
+            </button>
+            <button *ngIf="formState == 1" mat-raised-button (click)='previousState()' class="next-page" aria-label="SAVE">
+                < </button> <div *ngIf="formState == 1">
+                    <iframe src="https://ethfiddle.com/services/iframesnippet/2Rx8cQdEx3" scrolling="no" frameborder="0"
+                        height="300" width="700" allowtransparency="true" class="ef_embed_iframe" style="width: 100%; overflow: hidden;"></iframe>
+        </div>
+        <button *ngIf="formState == 1" mat-raised-button (click)='nextState()' class="next-page" aria-label="SAVE">
+            >
         </button>
-
+        <button *ngIf="formState == 2" mat-raised-button (click)='previousState()' class="next-page" aria-label="SAVE">
+            < </button> <div *ngIf="formState == 2">
+                <div class="template-form">
+                    <div class="primal-info">
+                        <mat-form-field fxFlex style="flex-grow: 1; padding: 15px; width: 40%">
+                            <input name="type" formControlName="type" placeholder="Creating" matInput required>
+                        </mat-form-field>
+                        <mat-form-field fxFlex style="flex-grow: 1; padding: 15px; width: 40%">
+                            <input name="symbol" formControlName="symbol" placeholder="Symbol" matInput required>
+                        </mat-form-field>
+                        <mat-form-field fxFlex style="flex-grow: 1; padding: 15px; width: 40%">
+                            <input name="type" formControlName="type" placeholder="Creating" matInput required>
+                        </mat-form-field>
+                        <mat-form-field fxFlex style="flex-grow: 1; padding: 15px; width: 40%">
+                            <input name="type" formControlName="type" placeholder="Creating" matInput required>
+                        </mat-form-field>
+                        <mat-form-field fxFlex style="flex-grow: 1; padding: 15px; width: 40%">
+                            <input name="type" formControlName="type" placeholder="Creating" matInput required>
+                        </mat-form-field>
+                    </div>
+                    <div class="detail-info">
+                        <div class="left-column">
+                            Editing in
+                            <div class="grey-bar">
+                            </div>
+                            <div class="complete-info">
+                                Is transferable if
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            The token use case
+                        </div>
+                    </div>
+                </div>
     </div>
+</div>
+
+</div>
+
+<div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+    <button *ngIf="action !=='edit'" mat-raised-button (click)="matDialogRef.close(contractForm)" class="save-button mat-accent"
+        [disabled]="contractForm.invalid" aria-label="SAVE">
+        SAVE
+    </button>
+
+</div>
 </div>
